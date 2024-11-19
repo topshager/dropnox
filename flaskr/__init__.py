@@ -30,8 +30,10 @@ def create_app(test_config=None):
     from dotenv import load_dotenv
     load_dotenv()
 
-    from.import home
+    from .import home
     app.register_blueprint(home.bp)
-    app.add_url_rule('/', endpoint='index')
+    app.add_url_rule('/',endpoint='home')
+
+
 
     return app
