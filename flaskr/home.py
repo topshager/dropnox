@@ -13,3 +13,4 @@ bp = Blueprint('home', __name__)
 def home():
     return render_template('homepage/home.html')
 
+
