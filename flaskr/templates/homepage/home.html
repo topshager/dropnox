@@ -8,7 +8,10 @@
 {% block content %}
 
 <li>
-  <a href="{{ url_for('create.createfolder') }}">Register</a>
+  <a href="{{ url_for('create.createfolder') }}">create folder</a>
+
+  <label for="file-upload" class="choose-file-btn">Choose File</label>
+  <input type="file" id="file-upload" name="file">
 </li>
 
 {% endblock %}
