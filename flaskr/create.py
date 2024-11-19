@@ -6,10 +6,9 @@ from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
-bp = Blueprint('home', __name__)
+bp = Blueprint('create', __name__)
 
-@bp.route('/')
-@login_required
-def home():
-    return render_template('homepage/home.html')
 
+@bp.route('/create')
+def createfolder():
+    return render_template('homepage/createfolder.html')

@@ -35,5 +35,9 @@ def create_app(test_config=None):
     app.add_url_rule('/',endpoint='home')
 
 
+    from .import create
+    app.register_blueprint(create.bp)
+    app.add_url_rule('/create',endpoint='create')
+
 
     return app
