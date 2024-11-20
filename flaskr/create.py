@@ -11,20 +11,6 @@ from pymongo import MongoClient
 
 bp = Blueprint('create', __name__)
 
-load_dotenv()
-
-uri = os.getenv("MONGODB_URI")
-
-
-if uri is None:
-    raise ValueError("MONGODB_URI not found in environment variables")
-
-client = MongoClient(uri)
-
-db = client['dropnox-file']  # Replace with your database name
-collection = db['file']  # Replace with your collection name
-
-
 @bp.route('/create')
 def createfolder():
     return render_template('homepage/createfolder.html')
