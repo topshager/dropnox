@@ -22,12 +22,12 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username,password) VALUES (?,?)",
+                    "INSERT INTO users (username,password) VALUES (?,?)",
                     (username, generate_password_hash(password)),
                 )
                 db.commit()
             except db.IntegrityError:
-                error = f"user{username} is already registered."
+                error = f"users{username} is already registered."
             else: return redirect(url_for("auth.login"))
         flash(error)
     return render_template('auth/register.html')
@@ -41,7 +41,7 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * from user where username = ?',(username,)
+            'SELECT * from users where username = ?',(username,)
         ).fetchone()
 
         if user is None:
@@ -64,7 +64,7 @@ def load_logged_in_user():
 
     else:
         g.user = get_db().execute(
-            'Select * from user where id =?',(user_id,)
+            'Select * from users where id =?',(user_id,)
         ).fetchone()
 
 @bp.route('/logout')

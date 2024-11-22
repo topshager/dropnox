@@ -3,32 +3,8 @@ from datetime import datetime
 import click
 from flask import current_app, g
 
-def init_db():
-    db = get_db()
-    print(current_app.config['DATABASE'])
-    try:
-        with current_app.open_resource('schema.sql') as f:
-            db.executescript(f.read().decode('utf8'))
-        click.echo("Database initialized successfully.")
-    except Exception as e:
-        click.echo(f"Error initializing database: {e}")
-    with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
-
-
-@click.command('init-db')
-def init_db_command():
-    init_db()
-    click.echo("Initialized the database.")
-
-
-sqlite3.register_converter(
-    "timestamp" ,lambda v:datetime.fromisoformat(v.decode())
-)
-
-
-
 def get_db():
+
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -37,11 +13,22 @@ def get_db():
         g.db.row_factory = sqlite3.Row
     return g.db
 
-
+def init_db():
+    db = get_db()
+    with current_app.open_resource('Schema.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+@click.command('init-db')
+def init_db_command():
+    init_db()
+    click.echo('Initializes the database.')
+sqlite3.register_converter(
+    "timestamp", lambda v: datetime.fromisoformat(v.decode())
+)
 def close_db(e=None):
     db = g.pop('db',None)
     if db is not None:
         db.close()
+
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
