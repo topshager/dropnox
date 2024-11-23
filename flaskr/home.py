@@ -10,5 +10,10 @@ bp = Blueprint('home', __name__)
 
 @bp.route('/')
 @login_required
+
 def home():
-    return render_template('homepage/home.html')
+    db = get_db()
+    folders = db.execute(
+        "SELECT * FROM folders WHERE id = ?",
+        (g.user['id'],)).fetchall()
+    return render_template('homepage/home.html',folders=folders)

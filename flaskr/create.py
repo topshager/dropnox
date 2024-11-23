@@ -47,8 +47,4 @@ def createfolder():
                 return redirect(url_for('home'))  # Stay on the same page after creation
 
     # Fetch all folders for the current user
-    folders = db.execute(
-        "SELECT * FROM folders WHERE id = ?",
-        (g.user['id'],)
-    ).fetchall()
-    return render_template('homepage/createfolder.html', folders=folders)
+    return render_template('homepage/createfolder.html')

@@ -19,9 +19,9 @@
 </ul>
 
 <div class="folder-list">
-  {% for folder in folders %}
+  {% for foldername in folders %}
     <div class="folder-item">
-      <p>{{ folder['name'] }}</p> <!-- Display folder name -->
+      <p>{{ foldername['name'] }}</p> <!-- Display folder name -->
     </div>
   {% else %}
     <p>No folders available.</p>
