@@ -21,7 +21,7 @@
 <div class="folder-list">
   {% for folder in folders %}
     <div class="folder-item">
-      <p>{{ folder.name }}</p> <!-- Display folder name -->
+      <p>{{ folder['name'] }}</p> <!-- Display folder name -->
     </div>
   {% else %}
     <p>No folders available.</p>
