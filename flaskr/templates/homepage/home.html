@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
 
-
 {% block header %}
-  <h1>{% block title %}Home screen {% endblock %}</h1>
+  <h1>{% block title %}Home Screen{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
+<ul>
+  <li>
+    <a href="{{ url_for('create.createfolder') }}">Create Folder</a>
+  </li>
+  <li>
+    <form action="{{ url_for('create') }}" method="POST" enctype="multipart/form-data">
+      <label for="file-upload" class="choose-file-btn">Upload File</label>
+      <input type="file" id="file-upload" name="file">
+      <button type="submit">Upload</button>
+    </form>
+  </li>
+</ul>
 
-<li>
-  <a href="{{ url_for('create.createfolder') }}">create folder</a>
-
-  <ul><label for="file-upload" class="choose-file-btn">upload file</label></ul>
-  <ul></ul><input type="file" id="file-upload" name="file"></ul>
-</li>
-
+<div class="folder-list">
+  {% for folder in folders %}
+    <div class="folder-item">
+      <p>{{ folder.name }}</p> <!-- Assuming 'name' is a field in 'folders' -->
+    </div>
+    {% if not loop.last %}
+      <hr> <!-- Adds a separator between folder items -->
+    {% endif %}
+  {% else %}
+    <p>No folders available.</p>
+  {% endfor %}
+</div>
 {% endblock %}
