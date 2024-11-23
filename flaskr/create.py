@@ -13,6 +13,7 @@ bp = Blueprint('create', __name__)
 
 @bp.route('/create',methods=('GET','POST'))
 def createfolder():
+
     if request.method == 'POST':
         foldername = request.form['folder-name']
         db = get_db()
@@ -28,5 +29,11 @@ def createfolder():
                 )
             except db.IntegrityError:
                 error = f"file {foldername} is already created"
-        flash(error)
+
+
+        if error:
+            flash(error)
+        else:
+            return redirect(url_for('home'))
+
     return render_template('homepage/createfolder.html')

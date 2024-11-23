@@ -6,8 +6,8 @@
 {% endblock %}
 {%block content%}
 <form method="post">
-  <label for="file-name">file name</label>
-  <input name="folder-name" id="folder" required>
+  <label for="file-name" >file name</label>
+  <input name="folder-name" id="folder"value="{{ request.form['folder-name'] }}" required>
   <input type="submit" value="submit ">
 </form>
 {% endblock %}
