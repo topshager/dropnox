@@ -21,11 +21,8 @@
 <div class="folder-list">
   {% for folder in folders %}
     <div class="folder-item">
-      <p>{{ folder.name }}</p> <!-- Assuming 'name' is a field in 'folders' -->
+      <p>{{ folder.name }}</p> <!-- Display folder name -->
     </div>
-    {% if not loop.last %}
-      <hr> <!-- Adds a separator between folder items -->
-    {% endif %}
   {% else %}
     <p>No folders available.</p>
   {% endfor %}

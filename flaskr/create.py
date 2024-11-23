@@ -26,21 +26,21 @@ def createfolder():
                 # Insert folder name with the username of the logged-in user
                 db.execute(
                     "INSERT INTO folders (name ) VALUES (?)",
-                    (foldername)
+                    (foldername,)
                 )
                 db.commit()
             except db.IntegrityError:
                 error = f"Folder '{foldername}' already exists"
 
-        if error:
-            flash(error)
-        else:
-            return redirect(url_for('create.createfolder'))  # Stay on the same page after creation
+
+            if error:
+                flash(error)
+            else:
+                return redirect(url_for('create.createfolder'))  # Stay on the same page after creation
 
     # Fetch all folders for the current user
     folders = db.execute(
-        "SELECT * FROM users WHERE username = ?",
+        "SELECT * FROM folders WHERE username = ?",
         (g.user['username'],)
     ).fetchall()
-
     return render_template('homepage/createfolder.html', folders=folders)
