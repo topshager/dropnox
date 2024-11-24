@@ -2,13 +2,12 @@
 
 {% block header %}
   <h1>{% block title %}Home Screen{% endblock %}</h1>
+  <a href="{{ url_for('create.createfolder') }}">Create Folder</a>
 {% endblock %}
 
 {% block content %}
 <ul>
-  <li>
-    <a href="{{ url_for('create.createfolder') }}">Create Folder</a>
-  </li>
+
   <li>
     <form action="{{ url_for('create') }}" method="POST" enctype="multipart/form-data">
       <label for="file-upload" class="choose-file-btn">Upload File</label>
@@ -21,7 +20,14 @@
 <div class="folder-list">
   {% for foldername in folders %}
     <div class="folder-item">
-      <p>{{ foldername['name'] }}</p> <!-- Display folder name -->
+      <style>
+        .folder-icon{
+          width: 50px;
+          height: auto;
+        }
+        </style>
+      <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Icon" class="folder-icon">
+      <p>{{ foldername['name'] }}</p>
     </div>
   {% else %}
     <p>No folders available.</p>
