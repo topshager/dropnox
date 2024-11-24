@@ -1,3 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}folder screen{% endblock %}</h1>
+  <a href="{{ url_for('create.createfolder') }}">Create Folder</a>
+{% endblock %}
+
+{% block content %}
 <div class="folder-list">
   {% for foldername in folders %}
     <div class="folder-item">

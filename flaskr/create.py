@@ -9,7 +9,7 @@ from flaskr.auth import login_required
 from flaskr.db import get_db
 import os
 bp = Blueprint('create', __name__)
-
+@login_required
 @bp.before_app_request
 def load_user():
     user_id = session.get('id')
@@ -20,9 +20,9 @@ def load_user():
 
 
 @bp.route('/create', methods=('GET', 'POST'))
-@login_required
+
 def createfolder():
-    db = get_db()  
+    db = get_db()
     error = None
 
     if request.method == 'POST':
