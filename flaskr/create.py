@@ -39,7 +39,7 @@ def create_folder():
         else:
             try:
                 db.execute(
-                    "INSERT INTO folders (name, user_id) VALUES (?, ?)",
+                    "INSERT INTO folders (name, id) VALUES (?, ?)",
                     (foldername, g.user['id'])
                 )
                 db.commit()
