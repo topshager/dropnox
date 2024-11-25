@@ -37,10 +37,10 @@ def create_app(test_config=None):
 
     from . import create
     app.register_blueprint(create.bp)
-    app.add_url_rule('/create', endpoint='create')
 
     from . import folder
     app.register_blueprint(folder.bp)
     app.add_url_rule('/folder', endpoint='folder')
 
+ 
     return app
