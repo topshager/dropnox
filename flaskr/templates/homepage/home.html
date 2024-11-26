@@ -16,23 +16,25 @@
     </form>
   </li>
 </ul>
-
 <div class="folder-list">
-  {% for foldername in folders %}
-    <div class="folder-item">
-      <style>
-        .folder-icon{
-          width: 50px;
-          height: auto;
-        }
-        </style>
-        <a href="{{ url_for('home.subfolder')}}">
-      <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Icon" class="folder-icon">
-    </a>
-      <p>{{ foldername['name']}}</p>
-    </div>
+  {% if folders %}
+    {% for folder in folders %}
+      <div class="folder-item">
+        <a href="{{ url_for('home.subfolder',folder_id=folder['folder_id']) }}">
+          <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Folder Icon" class="folder-icon">
+        </a>
+        <p>{{ folder['folder_id'] }}</p>
+      </div>
+    {% endfor %}
   {% else %}
     <p>No folders available.</p>
-  {% endfor %}
+  {% endif %}
 </div>
+
+<style>
+  .folder-icon {
+    width: 50px;
+    height: auto;
+  }
+</style>
 {% endblock %}

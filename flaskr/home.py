@@ -16,8 +16,13 @@ def home():
         "SELECT * FROM folders WHERE id = ?",
         (g.user['id'],)).fetchall()
 
+
     return render_template('homepage/home.html',folders=folders)
 
 @bp.route('/subfolder')
 def subfolder():
-    return render_template('homepage/subfolder.html')
+    db = get_db()
+    folders = db.execute(
+            "SELECT * FROM folders WHERE id = ?",
+        (g.user['id'],)).fetchall()
+    return render_template('homepage/subfolder.html',folders=folders)

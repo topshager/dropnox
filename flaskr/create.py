@@ -7,6 +7,7 @@ from flaskr.db import get_db
 
 bp = Blueprint('create', __name__)
 
+
 @bp.before_app_request
 def load_user_and_folders():
     """Load the current user and their folders before each request."""
@@ -39,9 +40,9 @@ def create_folder():
         else:
             try:
                 db.execute(
-                    "INSERT INTO folders (name, id) VALUES (?, ?)",
-                    (foldername, g.user['id'])
-                )
+                    "INSERT INTO folders (name, user_id) VALUES (?, ?)",
+            (foldername, g.user['id'])
+)
                 db.commit()
             except db.IntegrityError:
                 error = f"Folder '{foldername}' already exists"
@@ -53,10 +54,11 @@ def create_folder():
 
     return render_template('homepage/folder.html')
 
-@bp.route('/create_child', methods=('GET', 'POST'))
+@bp.route('/create_child/<int:folder_id>', methods=('GET', 'POST'))
+
 
 @login_required
-def create_child_folder():
+def create_child_folder(folder_id):
     db = get_db()
     error = None
     folder_id = session.get('folder_id')
@@ -74,7 +76,7 @@ def create_child_folder():
                 db.execute(
                     "INSERT INTO folders (name, user_id, parent_id) VALUES (?, ?, ?)",
                     (foldername, g.user['id'], folder_id)
-                )
+)
                 db.commit()
             except db.IntegrityError:
                 error = f"Folder '{foldername}' already exists"
