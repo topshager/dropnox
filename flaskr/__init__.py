@@ -41,6 +41,4 @@ def create_app(test_config=None):
     from . import folder
     app.register_blueprint(folder.bp)
     app.add_url_rule('/folder', endpoint='folder')
-
- 
     return app

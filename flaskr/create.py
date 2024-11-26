@@ -25,7 +25,7 @@ def load_user_and_folders():
     else:
         g.folders = []
 
-@bp.route('/create', methods=('GET', 'POST'))
+@bp.route('/create_top', methods=('GET', 'POST'))
 @login_required
 def create_folder():
     """Create a new top-level folder."""
@@ -54,16 +54,16 @@ def create_folder():
     return render_template('homepage/folder.html')
 
 @bp.route('/create_child', methods=('GET', 'POST'))
+
 @login_required
 def create_child_folder():
-    """Create a child folder inside the currently selected folder."""
     db = get_db()
     error = None
     folder_id = session.get('folder_id')
 
     if not folder_id:
         flash("No parent folder selected.")
-        return redirect(url_for('home'))
+        return redirect(url_for('home.subfolder'))
 
     if request.method == 'POST':
         foldername = request.form.get('folder-name')
@@ -82,6 +82,6 @@ def create_child_folder():
         if error:
             flash(error)
         else:
-            return redirect(url_for('folder'))  # Adjust as necessary for the redirect
+            return redirect(url_for('subfolder'))
 
-    return render_template('homepage/createchildfolder.html')
+    return render_template('homepage/create_child.html')

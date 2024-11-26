@@ -55,6 +55,7 @@ def login():
             return redirect(url_for('home'))
         flash(error)
     return render_template('auth/login.html')
+
 @bp.before_app_request
 def load_logged_in_user():
     id = session.get('id')

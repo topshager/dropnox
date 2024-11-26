@@ -9,7 +9,7 @@
 <ul>
 
   <li>
-    <form action="{{ url_for('create.create_child_folder') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url_for('create.create_folder') }}" method="POST" enctype="multipart/form-data">
       <label for="file-upload" class="choose-file-btn">Upload File</label>
       <input type="file" id="file-upload" name="file">
       <button type="submit">Upload</button>
@@ -26,10 +26,10 @@
           height: auto;
         }
         </style>
-        <a href="{{ url_for('folder.folder',folderId=1) }}">
+        <a href="{{ url_for('home.subfolder')}}">
       <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Icon" class="folder-icon">
     </a>
-      <p>{{ foldername['name'] }}</p>
+      <p>{{ foldername['name']}}</p>
     </div>
   {% else %}
     <p>No folders available.</p>

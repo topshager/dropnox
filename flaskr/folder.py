@@ -24,5 +24,4 @@ def folder(folderId):
     folders = db.execute(
         "SELECT * FROM folders WHERE  parent_id = ?",
         (folderId,)).fetchall()
-    return render_template('homepage/folder.html' ,folders=folders)
-
+    return render_template('homepage/subfolder.html' ,folders=folders)
