@@ -52,7 +52,7 @@ def create_child_folder(folder_id):
     db = get_db()
     error = None
 
-    subfolder = db.execute(
+    subfolders = db.execute(
                 "SELECT * FROM folders WHERE id = ? AND parent_id = ?",(g.user['id'],folder_id)).fetchall()
 
 
@@ -75,4 +75,4 @@ def create_child_folder(folder_id):
         else:
             return redirect(url_for('home.subfolder', folder_id=folder_id))
 
-    return render_template('homepage/create_child.html',folder_id=folder_id, subfolder= subfolder )
+    return render_template('homepage/create_child.html',folder_id=folder_id, subfolders= subfolders )
