@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}folder{% endblock %}</h1>
-  {% if folders %}
-  {% for folder in folders %}
-  <h1>{{ folder['name'] }}</h1>
-  <a href="{{ url_for('create.create_child_folder', folder_id=folder['folder_id']) }}">Create Folder</a>
-  <form action="{{ url_for('create.create_folder',folder_id=folder['folder_id']) }}" method="POST" enctype="multipart/form-data">
-    <p>{{ folder['folder_id'] }}</p>
-  </div>
-{% endfor %}
-{% else %}
-<p>No folders available.</p>
-{% endif %}
+<ul>
+  {{folder_id}}
+  <a href="{{ url_for('create.create_child_folder',folder_id=folder_id,subfolder=subfolder) }}">Create Folder</a>
+  <form action="{{ url_for('create.create_child_folder',folder_id=folder_id)}}" method="POST" enctype="multipart/form-data">
+</ul>
+{% endblock %}
+{% block content %}
+
+<div class="folder-list">
+  {% if subfolder %}
+    {% for folder in subfolder %}
+      <div class="folder-item">
+        <a href="{{ url_for('home.subfolder',folder_id=folder['folder_id']) }}">
+          <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Folder Icon" class="folder-icon">
+          {{subfolder['name']}}
+          {{subfolder['folder_id']}}
+        </a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No folders available.</p>
+  {% endif %}
+</div>
 {% endblock %}

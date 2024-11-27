@@ -12,19 +12,11 @@ bp = Blueprint('create', __name__)
 def load_user_and_folders():
     """Load the current user and their folders before each request."""
     user_id = session.get('id')
-    folder_id = session.get('folder_id')
 
     if user_id:
         g.user = get_db().execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
     else:
         g.user = None
-
-    if folder_id:
-        g.folders = get_db().execute(
-            'SELECT * FROM folders WHERE parent_id = ?', (folder_id,)
-        ).fetchall()
-    else:
-        g.folders = []
 
 @bp.route('/create_top', methods=('GET', 'POST'))
 @login_required
@@ -40,7 +32,7 @@ def create_folder():
         else:
             try:
                 db.execute(
-                    "INSERT INTO folders (name, user_id) VALUES (?, ?)",
+                    "INSERT INTO folders (name, id) VALUES (?, ?)",
             (foldername, g.user['id'])
 )
                 db.commit()
@@ -55,17 +47,14 @@ def create_folder():
     return render_template('homepage/folder.html')
 
 @bp.route('/create_child/<int:folder_id>', methods=('GET', 'POST'))
-
-
 @login_required
 def create_child_folder(folder_id):
     db = get_db()
     error = None
-    folder_id = session.get('folder_id')
 
-    if not folder_id:
-        flash("No parent folder selected.")
-        return redirect(url_for('home.subfolder'))
+    subfolder = db.execute(
+                "SELECT * FROM folders WHERE id = ? AND parent_id = ?",(g.user['id'],folder_id)).fetchall()
+
 
     if request.method == 'POST':
         foldername = request.form.get('folder-name')
@@ -74,7 +63,7 @@ def create_child_folder(folder_id):
         else:
             try:
                 db.execute(
-                    "INSERT INTO folders (name, user_id, parent_id) VALUES (?, ?, ?)",
+                    "INSERT INTO folders (name,id, parent_id) VALUES (?, ?, ?)",
                     (foldername, g.user['id'], folder_id)
 )
                 db.commit()
@@ -84,6 +73,6 @@ def create_child_folder(folder_id):
         if error:
             flash(error)
         else:
-            return redirect(url_for('subfolder'))
+            return redirect(url_for('home.subfolder', folder_id=folder_id))
 
-    return render_template('homepage/create_child.html')
+    return render_template('homepage/create_child.html',folder_id=folder_id, subfolder= subfolder )

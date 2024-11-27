@@ -52,7 +52,7 @@ def login():
         if error is None:
             session.clear()
             session['id'] = user['id']
-            return redirect(url_for('home'))
+            return redirect(url_for('home',))
         flash(error)
     return render_template('auth/login.html')
 

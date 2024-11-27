@@ -22,8 +22,9 @@
       <div class="folder-item">
         <a href="{{ url_for('home.subfolder',folder_id=folder['folder_id']) }}">
           <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Folder Icon" class="folder-icon">
+          {{folder['name']}}
+          {{folder['folder_id']}}
         </a>
-        <p>{{ folder['folder_id'] }}</p>
       </div>
     {% endfor %}
   {% else %}
