@@ -23,7 +23,6 @@ CREATE TABLE files (
   file_id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   folder_id INTEGER,
-  size INTEGER NOT NULL,
   typ TEXT NOT NULL,
   content BLOB,
   id INTEGER,
