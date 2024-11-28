@@ -2,18 +2,22 @@
 
 {% block header %}
   <h1>{% block title %}Home Screen{% endblock %}</h1>
+  <form action="{{ url_for('create.create_folder') }}" method="POST" enctype="multipart/form-data">
   <a href="{{ url_for('create.create_folder') }}">Create Folder</a>
+</form>
+
 {% endblock %}
 
 {% block content %}
 <ul>
 
   <li>
-    <form action="{{ url_for('create.create_folder') }}" method="POST" enctype="multipart/form-data">
+      <form method="POST" action="/uplaod" enctype="multipart/form-data">
       <label for="file-upload" class="choose-file-btn">Upload File</label>
       <input type="file" id="file-upload" name="file">
       <button type="submit">Upload</button>
     </form>
+
   </li>
 </ul>
 <div class="folder-list">
