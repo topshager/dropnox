@@ -34,8 +34,4 @@ def subfolder(folder_id):
         "SELECT * FROM folders WHERE id =?",
         (folder_id,)
     ).fetchone()
-    files = db.execute(
-        "SELECT * FROM files  where id = ? AND file_id  IS NULL",
-        (g.user['id'])
-    )
-    return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder, files= files)
+    return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder)
