@@ -31,9 +31,10 @@ def create_folder():
             error = 'Folder name cannot be blank'
         else:
             try:
+                Type = "folder"
                 db.execute(
-                    "INSERT INTO folders (name, id) VALUES (?, ?)",
-            (foldername, g.user['id'])
+                    "INSERT INTO folders (name, id,typ) VALUES (?,?,?)",
+            (foldername, g.user['id'],Type)
 )
                 db.commit()
             except db.IntegrityError:
@@ -62,9 +63,11 @@ def create_child_folder(folder_id):
             error = 'Folder name cannot be blank'
         else:
             try:
+                Type = "file"
+
                 db.execute(
-                    "INSERT INTO folders (name,id, parent_id) VALUES (?, ?, ?)",
-                    (foldername, g.user['id'], folder_id)
+                    "INSERT INTO folders (name,id, parent_id,typ) VALUES (?, ?, ?, ?)",
+                    (foldername, g.user['id'], folder_id, Type )
 )
                 db.commit()
             except db.IntegrityError:

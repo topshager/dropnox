@@ -3,36 +3,47 @@
 {% block header %}
   <h1>{% block title %}Home Screen{% endblock %}</h1>
   <form action="{{ url_for('create.create_folder') }}" method="POST" enctype="multipart/form-data">
-  <a href="{{ url_for('create.create_folder') }}">Create Folder</a>
-</form>
-
+    <a href="{{ url_for('create.create_folder') }}">Create Folder</a>
+  </form>
 {% endblock %}
 
 {% block content %}
 <ul>
-
   <li>
-      <form method="POST" action="/upload" enctype="multipart/form-data">
+    <form method="POST" action="/upload" enctype="multipart/form-data">
       <label for="file-upload" class="choose-file-btn">Upload File</label>
       <input type="file" id="file-upload" name="file">
       <button type="submit">Upload</button>
     </form>
-
   </li>
 </ul>
-<div class="folder-list">
+
+<div class="item-list">
+
   {% if folders %}
     {% for folder in folders %}
-      <div class="folder-item">
-        <a href="{{ url_for('home.subfolder',folder_id=folder['folder_id']) }}">
+      <div class="item">
+        <a href="{{ url_for('home.subfolder', folder_id=folder['folder_id']) }}">
           <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Folder Icon" class="folder-icon">
-          {{folder['name']}}
-          {{folder['folder_id']}}
+          {{ folder['name'] }}
         </a>
       </div>
     {% endfor %}
   {% else %}
     <p>No folders available.</p>
+  {% endif %}
+
+  {% if files %}
+    {% for file in files %}
+      <div class="item">
+        <a>
+        <img src="{{ url_for('static', filename='images/google-docs.png') }}" alt="File Icon" class="folder-icon">
+        {{ file['name'] }}
+      </a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No files available.</p>
   {% endif %}
 </div>
 

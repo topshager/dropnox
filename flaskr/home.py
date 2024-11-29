@@ -15,8 +15,11 @@ def home():
     folders = db.execute(
         "SELECT * FROM folders WHERE id = ? AND parent_id IS NULL",
         (g.user['id'],)).fetchall()
+    files = db.execute(
+        "SELECT * FROM files WHERE  id = ? AND folder_id  IS NULL",
+        (g.user['id'],)).fetchall()
 
-    return render_template('homepage/home.html',folders=folders)
+    return render_template('homepage/home.html',folders=folders,files=files)
 
 
 
@@ -31,4 +34,8 @@ def subfolder(folder_id):
         "SELECT * FROM folders WHERE id =?",
         (folder_id,)
     ).fetchone()
-    return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder)
+    files = db.execute(
+        "SELECT * FROM files  where id = ? AND file_id  IS NULL",
+        (g.user['id'])
+    )
+    return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder, files= files)

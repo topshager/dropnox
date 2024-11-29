@@ -47,10 +47,10 @@ def uploade():
 
         db = get_db()
         file = db.execute(
-            "INSERT INTO files(id,name,typ ) VALUES(?,?,?)",(g.user['id'],filename,filetype)
+            "INSERT INTO files(id,name,typ) VALUES(?,?,?)",(g.user['id'],filename,filetype)
         )
         db.commit()
-        
+
         flash('File uploaded successfully!')
 
     else:
