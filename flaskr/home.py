@@ -18,7 +18,6 @@ def home():
     files = db.execute(
         "SELECT * FROM files WHERE  id = ? AND folder_id  IS NULL",
         (g.user['id'],)).fetchall()
-
     return render_template('homepage/home.html',folders=folders,files=files)
 
 
