@@ -51,11 +51,8 @@ def home():
 @bp.route('/subfolder/<int:folder_id>')
 def subfolder(folder_id):
     db = get_db()
-    if not subfolders:
-        flash("No subfolders found.")
-        return redirect(url_for('home.home'))
-    else:
 
+    if subfolder:
         subfolders = db.execute(
             "SELECT * FROM folders Where parent_id = ? AND id = ?",
             (folder_id,g.user['id'])).fetchall()
@@ -63,4 +60,8 @@ def subfolder(folder_id):
             "SELECT * FROM folders WHERE id =?",
             (folder_id,)
         ).fetchone()
+    else:
+        flash("No subfolders found.")
+        return redirect(url_for('home.home'))
+
     return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder)
