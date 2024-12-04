@@ -25,7 +25,7 @@ CREATE TABLE files (
   name TEXT NOT NULL,
   folder_id INTEGER,
   typ TEXT NOT NULL,
-  content BLOB,
+  content BLOB NOT NULL,
   id INTEGER,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

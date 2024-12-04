@@ -20,6 +20,7 @@
 
 <div class="item-list">
 
+
   {% if folders %}
     {% for folder in folders %}
       <div class="item">
@@ -33,19 +34,23 @@
     <p>No folders available.</p>
   {% endif %}
 
-  {% if files %}
-    {% for file in files %}
-      <div class="item">
-        <a>
-        <img src="{{ url_for('static', filename='images/google-docs.png') }}" alt="File Icon" class="folder-icon">
-        {{ file['name'] }}
-      </a>
-      </div>
-    {% endfor %}
-  {% else %}
-    <p>No files available.</p>
-  {% endif %}
-</div>
+
+  {% for file in file_preview %}
+  <div class="file-preview">
+      <p>{{ file.name }}</p>
+      {% if file.preview and file.preview != "Error generating preview" %}
+          {% if file.preview is string %}
+              <img src="{{ file.preview }}" alt="{{ file.name }}" />
+          {% elif file.preview is iterable %}
+
+              <pre>{{ file.preview | join('\n') }}</pre>
+          {% endif %}
+      {% else %}
+          <p>{{ file.preview }}</p>
+      {% endif %}
+  </div>
+{% endfor %}
+
 
 <style>
   .folder-icon {

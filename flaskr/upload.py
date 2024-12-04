@@ -44,10 +44,11 @@ def uploade():
     if file and allowed_files(file.filename):
         filename = secure_filename(file.filename)
         filetype = filename.rsplit('.',1)[1].lower()
+        file_content = file.read()
 
         db = get_db()
         file = db.execute(
-            "INSERT INTO files(id,name,typ) VALUES(?,?,?)",(g.user['id'],filename,filetype)
+            "INSERT INTO files(content,id,name,typ) VALUES(?,?,?,?)",(file_content,g.user['id'],filename,filetype)
         )
         db.commit()
 
