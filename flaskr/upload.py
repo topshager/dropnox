@@ -67,16 +67,21 @@ def upload_folder():
         return jsonify({'message':'No files in the request'}),400
 
     files = request.files.getlist('files')
-    for file in files:
-        path= (file.filename).split('/')
-        folder_name = path[0]
-        db = get_db()
-        user_id = session.get('id')
-        print(user_id)
-        Type = "folder"
-        db.execute(
+    i =0
+    while i == 0:
+        for file in files:
+            path= (file.filename).split('/')
+            folder_name = path[0]
+        i+=1
+        print(folder_name)
+
+    db = get_db()
+    user_id = session.get('id')
+    print(user_id)
+    Type = "folder"
+    db.execute(
             "INSERT INTO folders (name,typ,id) VALUES(?,?,?)",
             (folder_name,Type,user_id)
         )
-        db.commit()
+    db.commit()
     return jsonify({'message': f'{len(files)} files uploaded successfully'})
