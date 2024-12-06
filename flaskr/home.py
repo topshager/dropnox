@@ -21,30 +21,7 @@ def home():
         "SELECT * FROM files WHERE  id = ? AND folder_id  IS NULL",
         (g.user['id'],)).fetchall()
 
-    file_preview = []
-    for file in files:
-            try:
-                if file['typ'] == 'txt':
-                    content = file['content']
-                    lines =content.decode('utf-8').splitlines()[:5]
-                    file_preview.append({'name':file['name'],'preview':lines})
-                    print(file['typ'])
-
-                elif file['typ'] in ('png' ,'jpeg','gif'):
-                    content = file['content']
-                    image_data = io.BytesIO(content)
-                    with Image.open(image_data ) as img:
-                        img.thumbnail((150,150))
-                        preview_data = io.BytesIO()
-                        img.save(preview_data,format='PNG')
-                        preview_data.seek(0)
-                        preview_base64 = b64encode(preview_data.read()).decode('utf-8')
-                        file_preview.append({'name':file['name'],'preview':f"data:image/png;base64,{preview_base64}"})
-
-            except Exception as e:
-                file_preview.append({'name': file['name'], 'preview': ["Error generating preview"]})
-
-    return render_template('homepage/home.html',folders=folders,files=files,file_preview=file_preview)
+    return render_template('homepage/home.html',folders=folders,files=files)
 
 
 
