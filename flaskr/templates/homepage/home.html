@@ -9,13 +9,19 @@
 
 {% block content %}
 <ul>
-  <li>
+    <h1>Upload a file</h1>
     <form method="POST" action="/upload" enctype="multipart/form-data">
-      <label for="file-upload" class="choose-file-btn">Upload File</label>
       <input type="file" id="file-upload" name="file">
-      <button type="submit">Upload</button>
+      <button type="submit">Upload </button>
     </form>
-  </li>
+    <h1>Upload a folder</h1>
+    <form id="uploadForm">
+      <input type="file" id="folderInput"  webkitdirectory multiple>
+      <button type="submit">Upload folder</button>
+    </form>
+    <div id="status"></div>
+    <script src="uplad.js"></script>
+
 </ul>
 
 <div class="item-list">
@@ -35,22 +41,18 @@
   {% endif %}
 
 
-  {% for file in file_preview %}
-  <div class="file-preview">
-      <p>{{ file.name }}</p>
-      {% if file.preview and file.preview != "Error generating preview" %}
-          {% if file.preview is string %}
-              <img src="{{ file.preview }}" alt="{{ file.name }}" />
-          {% elif file.preview is iterable %}
+  {% if files %}
+    {% for file in files %}
+      <div class="item">
+        <a>
+          <img src="{{ url_for('static', filename='images/google-docs.png') }}" alt="File Icon" class="folder-icon">
+          {{ file['name'] }}
+    {% endfor %}
+  {% else %}
+    <p>No files available.</p>
+  {% endif %}
 
-              <pre>{{ file.preview | join('\n') }}</pre>
-          {% endif %}
-      {% else %}
-          <p>{{ file.preview }}</p>
-      {% endif %}
-  </div>
-{% endfor %}
-
+</div>
 
 <style>
   .folder-icon {
