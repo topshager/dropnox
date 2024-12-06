@@ -15,12 +15,14 @@
       <button type="submit">Upload </button>
     </form>
     <h1>Upload a folder</h1>
-    <form id="uploadForm">
+    <form id="uploadForm" action="/upload-folder" method="POST" enctype="multipart/form-data">
       <input type="file" id="folderInput"  webkitdirectory multiple>
       <button type="submit">Upload folder</button>
     </form>
     <div id="status"></div>
-    <script src="uplad.js"></script>
+    <script src="/static/upload.js"></script>
+
+
 
 </ul>
 
