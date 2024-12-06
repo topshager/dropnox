@@ -78,5 +78,5 @@ def upload_folder():
             "INSERT INTO folders (name,typ,id) VALUES(?,?,?)",
             (folder_name,Type,user_id)
         )
-        db.commit
+        db.commit()
     return jsonify({'message': f'{len(files)} files uploaded successfully'})
