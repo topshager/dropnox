@@ -1,6 +1,6 @@
 import os
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for,session
+    Blueprint, flash, g, redirect, render_template, request, url_for,session,jsonify,current_app
 )
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import abort
@@ -58,3 +58,19 @@ def uploade():
         flash('Invalid file type')
 
     return redirect(url_for('home'))
+
+@login_required
+@bp.route('/upload-folder',methods=['POST'])
+def upload_folder():
+    if 'files' not in request.files:
+        return jsonify({'message':'No files in the request'}),400
+    
+    files = request.files.getlist('files')
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    for file in files:
+        if file and allowed_files(file.filename):
+            file_path = os.path.join(upload_folder, secure_filename(file.filename))
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            file.save(file_path)
+    print(request.files)
+    return jsonify({'message': f'{len(files)} files uploaded successfully'})
