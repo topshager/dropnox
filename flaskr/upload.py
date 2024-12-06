@@ -27,6 +27,7 @@ def load_logged_in_user():
         g.user = db.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
 
 
+
 @bp.route('/upload',methods=['POST'])
 @login_required
 def uploade():
@@ -64,13 +65,18 @@ def uploade():
 def upload_folder():
     if 'files' not in request.files:
         return jsonify({'message':'No files in the request'}),400
-    
+
     files = request.files.getlist('files')
-    upload_folder = current_app.config['UPLOAD_FOLDER']
     for file in files:
-        if file and allowed_files(file.filename):
-            file_path = os.path.join(upload_folder, secure_filename(file.filename))
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            file.save(file_path)
-    print(request.files)
+        path= (file.filename).split('/')
+        folder_name = path[0]
+        db = get_db()
+        user_id = session.get('id')
+        print(user_id)
+        Type = "folder"
+        db.execute(
+            "INSERT INTO folders (name,typ,id) VALUES(?,?,?)",
+            (folder_name,Type,user_id)
+        )
+        db.commit
     return jsonify({'message': f'{len(files)} files uploaded successfully'})
