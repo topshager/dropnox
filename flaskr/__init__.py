@@ -8,6 +8,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        UPLOAD_FOLDER=os.path.join(app.instance_path, 'uploads')
     )
 
 
@@ -18,6 +19,10 @@ def create_app(test_config=None):
 
     try:
         os.makedirs(app.instance_path)
+    except OSError:
+        pass
+    try:
+        os.makedirs(app.config['UPLOAD_FOLDER'])
     except OSError:
         pass
 
