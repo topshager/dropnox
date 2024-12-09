@@ -2,3 +2,4 @@
 app.env
 .env
 notes.txt
+instance/flaskr.sqlite
