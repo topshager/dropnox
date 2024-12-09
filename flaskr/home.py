@@ -37,8 +37,8 @@ def subfolder(folder_id):
             (folder_id,)
         ).fetchone()
     files = db.execute(
-            "SELECT * FROM files WHERE folder_id = ? AND id = ?",
-        (parent_folder,g.user['id'])).fetchall()
+            "SELECT * FROM files ",
+        ).fetchall()
 
     if not subfolder and not files:
         flash(":no subfolder or files founf")
