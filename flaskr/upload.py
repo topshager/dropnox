@@ -83,7 +83,7 @@ def upload_folder():
             (folder_name,Type,user_id)
         )
     db.commit()
-
+    user_id = session.get('id')
     folder_id = db.execute(
         "select * from folders  where name = ? ORDER BY created_at DESC  LIMIT 1",
         (folder_name,)
@@ -102,8 +102,8 @@ def upload_folder():
             file_content = file.read()
             file_type = filename.rsplit('.', 1)[1].lower()
             db.execute(
-                "INSERT INTO files (content, folder_id, name, typ) VALUES (?, ?, ?, ?)",
-                (file_content, folder_id, filename, file_type)
+                "INSERT INTO files (content, folder_id, name, typ,id) VALUES (?, ?, ?, ?,?)",
+                (file_content, folder_id, filename, file_type,user_id)
             )
             db.commit()
         else:
