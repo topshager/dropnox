@@ -2,6 +2,8 @@
 
 {% block header %}
   <h1>{% block title %}Home Screen{% endblock %}</h1>
+  <link rel="icon" href="{{ url_for('static', filename='images/cloud-switch_15321980.png') }}" type="image/png">
+
   <form action="{{ url_for('create.create_folder') }}" method="POST" enctype="multipart/form-data">
     <a href="{{ url_for('create.create_folder') }}">Create Folder</a>
   </form>
