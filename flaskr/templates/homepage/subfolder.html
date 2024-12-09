@@ -30,6 +30,8 @@
         <a>
           <img src="{{ url_for('static', filename='images/google-docs.png') }}" alt="File Icon" class="folder-icon">
           {{ file['name'] }}
+          {{file['id'] }}
+          {{file['folder_id']}}
         </a>
     {% endfor %}
   {% else %}
