@@ -67,7 +67,6 @@ def upload_folder():
         return jsonify({'message':'No files in the request'}),400
 
     files = request.files.getlist('files')
-    print(files)
     i =0
     while i == 0:
         for file in files:
@@ -78,21 +77,40 @@ def upload_folder():
 
     db = get_db()
     user_id = session.get('id')
-    print(user_id)
     Type = "folder"
-    folder_n = db.execute(
+    db.execute(
             "INSERT INTO folders (name,typ,id) VALUES(?,?,?)",
             (folder_name,Type,user_id)
         )
     db.commit()
+
     folder_id = db.execute(
-        "select folder_id from folders  where name = ? ORDER BY created_at DESC  LIMIT 1",
-        (folder_n,)
+        "select * from folders  where name = ? ORDER BY created_at DESC  LIMIT 1",
+        (folder_name,)
     ).fetchone()
+
+    if not folder_id:
+        return jsonify({'message': 'Failed to retrieve folder ID'}), 500
+
+    folder_id = folder_id['folder_id']
     print(folder_id)
-    #try:
-    #    for file in files:
-    #        content = file.read()
-    # created_at
-    #except:
+
+    for file in files:
+        print(file)
+        if file and allowed_files(file.filename):
+            filename = secure_filename(file.filename.split('/')[-1])
+            file_content = file.read()
+            file_type = filename.rsplit('.', 1)[1].lower()
+            db.execute(
+                "INSERT INTO files (content, folder_id, name, typ) VALUES (?, ?, ?, ?)",
+                (file_content, folder_id, filename, file_type)
+            )
+            db.commit()
+        else:
+            print("could not ")
+            pass
+
+
+
+
     return jsonify({'message': f'{len(files)} files uploaded successfully'})
