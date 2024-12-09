@@ -23,6 +23,19 @@
   {% else %}
     <p>No folders available.</p>
   {% endif %}
+
+  {% if files %}
+    {% for file in files %}
+      <div class="item">
+        <a>
+          <img src="{{ url_for('static', filename='images/google-docs.png') }}" alt="File Icon" class="folder-icon">
+          {{ file['name'] }}
+        </a>
+    {% endfor %}
+  {% else %}
+    <p>No files available.</p>
+  {% endif %}
+
 </div>
 <style>
   .folder-icon {
