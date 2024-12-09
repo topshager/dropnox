@@ -29,16 +29,18 @@ def home():
 def subfolder(folder_id):
     db = get_db()
 
-    if subfolder:
-        subfolders = db.execute(
+    subfolders = db.execute(
             "SELECT * FROM folders Where parent_id = ? AND id = ?",
             (folder_id,g.user['id'])).fetchall()
-        parent_folder = db.execute(
+    parent_folder = db.execute(
             "SELECT * FROM folders WHERE id =?",
             (folder_id,)
         ).fetchone()
-    else:
-        flash("No subfolders found.")
-        return redirect(url_for('home.home'))
+    files = db.execute(
+            "SELECT * FROM files WHERE folder_id = ? AND id = ?",
+        (parent_folder,g.user['id'])).fetchall()
 
-    return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder)
+    if not subfolder and not files:
+        flash(":no subfolder or files founf")
+        return redirect(url_for('home.home'))
+    return render_template('homepage/subfolder.html',folder_id=folder_id,subfolders=subfolders, parent_folder=parent_folder,files=files)
