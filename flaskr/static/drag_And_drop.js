@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let draggedItem = null;
 
-  // Set up dragstart and dragend events
+
   items.forEach(item => {
     item.setAttribute('draggable', true);
 
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Set up dragover, dragenter, and drop events for folders
   folders.forEach(folder => {
     folder.addEventListener('dragover', (event) => {
       event.preventDefault();
@@ -37,9 +36,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const draggedId = event.dataTransfer.getData('text/plain');
       const draggedElement = document.getElementById(draggedId);
+      const targetFolderId = folder.id
 
       if (draggedElement) {
         folder.appendChild(draggedElement);
+        const data = {
+          draggedItemId: draggedId,
+          targetFolderId: targetFolderId
+        };
+        fetch('/move-item',{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(responseData =>{
+          console.log('Backend response:',responseData):
+        })
+        .catch(error =>{
+          console.error('Error:',error);
+
+        });
       }
     });
   });
