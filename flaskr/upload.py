@@ -112,3 +112,15 @@ def upload_folder():
 
 
     return jsonify({'message': f'{len(files)} files uploaded successfully'})
+@login_required
+@bp.route('/move-item',methods=['POST'])
+def move_item():
+    data = request.get_json()
+    dragged_item_id = data.get('draggedItemId')
+    target_folder_id = data.get('targetFolderId')
+    print(f"Item {dragged_item_id} moved to folder {target_folder_id}")
+    
+    return jsonify({
+        'status': 'success',
+        'message': f'Item {dragged_item_id} moved to folder {target_folder_id}'
+    })
