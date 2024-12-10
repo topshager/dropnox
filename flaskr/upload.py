@@ -93,10 +93,8 @@ def upload_folder():
         return jsonify({'message': 'Failed to retrieve folder ID'}), 500
 
     folder_id = folder_id['folder_id']
-    print(folder_id)
 
     for file in files:
-        print(file)
         if file and allowed_files(file.filename):
             filename = secure_filename(file.filename.split('/')[-1])
             file_content = file.read()
