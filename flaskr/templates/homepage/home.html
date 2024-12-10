@@ -39,6 +39,7 @@
         <a href="{{ url_for('home.subfolder', folder_id=folder['folder_id']) }}">
           <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="Folder Icon" class="folder-icon">
           {{ folder['name'] }}
+          {{folder['id']}}
         </a>
       </div>
     {% endfor %}
@@ -65,5 +66,11 @@
     width: 50px;
     height: auto;
   }
+  .folder.dragover {
+  background-color: lightblue;
+  border: 2px dashed #000;
+}
 </style>
+
+
 {% endblock %}
