@@ -4,3 +4,4 @@ app.env
 notes.txt
 instance/flaskr.sqlite
 *.sqlite
+instance/flaskr.sqlite
